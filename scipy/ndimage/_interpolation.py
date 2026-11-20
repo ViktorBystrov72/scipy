@@ -907,7 +907,7 @@ def rotate(input, angle, axes=(1, 0), reshape=True, output=None, order=3,
     ----------
     %(input)s
     angle : float
-        The rotation angle in degrees.
+        The finite rotation angle in degrees.
     axes : tuple of 2 ints, optional
         The two axes that define the plane of rotation. Default is the first
         two axes.
@@ -982,6 +982,9 @@ def rotate(input, angle, axes=(1, 0), reshape=True, output=None, order=3,
         raise ValueError('invalid rotation plane specified')
 
     axes.sort()
+
+    if not np.isfinite(angle):
+        raise ValueError('angle must be finite')
 
     c, s = special.cosdg(angle), special.sindg(angle)
 

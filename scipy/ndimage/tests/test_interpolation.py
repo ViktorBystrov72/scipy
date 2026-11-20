@@ -1570,3 +1570,10 @@ class TestRotate:
         a = xp.asarray(np.tile(np.arange(5), (5, 1)))
         b = ndimage.rotate(ndimage.rotate(a, 180), -180)
         xp_assert_equal(a, b)
+
+
+@pytest.mark.parametrize('angle', [np.nan, np.inf, -np.inf])
+@pytest.mark.parametrize('reshape', [True, False])
+def test_rotate_nonfinite_angle(angle, reshape):
+    with pytest.raises(ValueError, match='angle must be finite'):
+        ndimage.rotate(np.ones((3, 3)), angle, reshape=reshape)

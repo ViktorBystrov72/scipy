@@ -1034,7 +1034,8 @@ class _BPoly(_PPolyBase):
                 a, b = b, a
                 sign = -1
 
-            xs, xe = self.x[0], self.x[-1]
+            # Breakpoints can be decreasing, but the period must be positive.
+            xs, xe = sorted((self.x[0], self.x[-1]))
             period = xe - xs
             interval = b - a
             n_periods, left = divmod(interval, period)
